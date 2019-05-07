@@ -1,5 +1,5 @@
 import os
-from lex_analyser import Analyser
+from lex_analyser import Analyser, LexemeTable
 
 test_dir = 'C:\\Users\\Vlad\\Documents\\GitHub\\compiler-basics-2\\test files\\'
 
@@ -18,15 +18,4 @@ with open(test_dir + os.listdir(test_dir)[0]) as file:
     for line in file:
         tokens.append(line.replace('\n', '').split(' '))
 
-anal = Analyser(tokens)
-print(anal.tokens, anal.cur_line, anal.cur_token)
-anal.next_token()
-print(anal.tokens, anal.cur_line, anal.cur_token)
-anal.next_token()
-print(anal.tokens, anal.cur_line, anal.cur_token)
-anal.next_line()
-print(anal.tokens, anal.cur_line, anal.cur_token)
-anal.next_token()
-print(anal.tokens, anal.cur_line, anal.cur_token)
-anal.next_line()
-print(anal.tokens, anal.cur_line, anal.cur_token)
+Analyser(tokens).analyze()
