@@ -1,3 +1,0 @@
-Var yo, asdf, 123, asd :Boolean;
-Var oysad, dd, 12, asd, as
-hah 12 fa23 sad2 22

@@ -36,16 +36,17 @@ class Analyser:
         ]
 
         self.bin_ops = [
-            '.AND.'
-            '.XOR.'
-            '.OR.'
-            '-'
-            '+'
-            '*'
-            '/'
-            '>'
-            '<'
-            '=='
+            '.AND.',
+            '.XOR.',
+            '.OR.',
+            '-',
+            '+',
+            '*',
+            '/',
+            '>',
+            '<',
+            '==',
+            ':='
         ]
 
     def is_ident(self, token):
@@ -62,19 +63,21 @@ class Analyser:
 
     def add_to_lexeme_table(self, token):
         if token in self.keywords:
-            if token not in self.lexeme_table.keywords:
+            if token not in [item for tuple in self.lexeme_table.keywords for item in tuple]:
                 self.lexeme_table.keywords.append((token, self.cur_line_num))
         elif token in self.un_ops:
-            if token not in self.lexeme_table.un_ops:
+            if token not in [item for tuple in self.lexeme_table.un_ops for item in tuple]:
                 self.lexeme_table.un_ops.append((token, self.cur_line_num))
         elif token in self.bin_ops:
-            if token not in self.lexeme_table.bin_ops:
+            if token not in [item for tuple in self.lexeme_table.bin_ops for item in tuple]:
                 self.lexeme_table.bin_ops.append((token, self.cur_line_num))
         elif self.is_ident(token):
-            if token not in self.lexeme_table.idents:
+            if token not in [item for tuple in self.lexeme_table.idents for item in tuple]:
                 self.lexeme_table.idents.append((token, self.cur_line_num))
         elif self.is_const(token):
-            if token not in self.lexeme_table.constants:
+            if token not in [item for tuple in self.lexeme_table.constants for item in tuple]:
+                if token.isdigit():
+                    token = str(hex(int(token)))
                 self.lexeme_table.constants.append((token, self.cur_line_num))
         else:
             self.error(2)
@@ -102,6 +105,18 @@ class Analyser:
             output_file.write('IDs:\n')
             for ident in self.lexeme_table.idents:
                 output_file.write(ident[0] + ', line ' + str(ident[1]) + '\n')
+            output_file.write('\nKeywords:\n')
+            for keyword in self.lexeme_table.keywords:
+                output_file.write(keyword[0] + ', line ' + str(keyword[1]) + '\n')
+            output_file.write('\nBinary operators:\n')
+            for bin_op in self.lexeme_table.bin_ops:
+                output_file.write(bin_op[0] + ', line ' + str(bin_op[1]) + '\n')
+            output_file.write('\nUnary operators:\n')
+            for un_op in self.lexeme_table.un_ops:
+                output_file.write(un_op[0] + ', line ' + str(un_op[1]) + '\n')
+            output_file.write('\nConstants:\n')
+            for const in self.lexeme_table.constants:
+                output_file.write(const[0] + ', line ' + str(const[1]) + '\n')
         with open('error log.txt', 'w') as error_file:
             for line in self.error_log:
                 error_file.write(line)
@@ -140,9 +155,13 @@ class Analyser:
         if self.cur_token != 'Begin':
             self.error(7)
         while self.cur_token != 'End':
+            if self.cur_token == '{':
+                while self.cur_token != '}':
+                    self.next_token()
+                self.next_token()
             if len(self.tokens) == len(self.cur_line) == 1:
-                self.error(8)
                 self.analyze_operator()
+                self.error(8)
                 break
             self.analyze_operator()
             self.next_token()

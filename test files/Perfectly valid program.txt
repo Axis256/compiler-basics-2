@@ -1,0 +1,9 @@
+Var a, b, c, abc :Boolean;
+Var x, y, x1, y1 :Decimal;
+Begin
+x := 10
+x1 := 4 + 9
+y := 10 - x
+a := x == y
+For x := 1 To y Do x1 := x1 + 1
+End

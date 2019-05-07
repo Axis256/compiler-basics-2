@@ -11,10 +11,10 @@ for file in os.listdir(test_dir):
         i += 1
         print(str(i) + '.', file)
 
-# file_num = int(input('\n> '))
+file_num = int(input('\n> '))
 
 tokens = []
-with open(test_dir + os.listdir(test_dir)[0]) as file:
+with open(test_dir + os.listdir(test_dir)[file_num - 1]) as file:
     for line in file:
         tokens.append(line.replace('\n', '').split(' '))
 
