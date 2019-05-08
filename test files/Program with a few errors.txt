@@ -1,4 +1,4 @@
-Var a, 11, c d, 2e, f, :Boolean;
+Var a, 11, c d, 2e, f%, :Boolean;
 var d, y, 113, das we :Decimal;
 Begin
 a ++ = 1

@@ -1,7 +1,7 @@
 import os
 from lex_analyser import Analyser, LexemeTable
 
-test_dir = 'C:\\Users\\Vlad\\Documents\\GitHub\\compiler-basics-2\\test files\\'
+test_dir = 'C:\\Users\\vladl\\Documents\\GitHub\\compiler-basics-2\\test files\\'
 
 print('\nChoose input file:\n')
 
